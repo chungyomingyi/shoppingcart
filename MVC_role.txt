@@ -1,0 +1,33 @@
+
+資料來源：https://codeigniter.org.tw/forum/viewtopic.php?f=7&t=2800
+
+當使用 MVC 開發程式時，必須要考慮一些規則。 Here are a few to help get started:
+不要 這樣做 (Don't do these):
+
+Views:
+1. 絕對不要存取資料庫
+2. 絕對不要使用任何複雜度超過 loops 和 if 的指令
+
+Controllers:
+1. 絕對不要包括 HTML 編碼
+2. 絕對不要存取資料庫
+
+Models:
+1. 永遠，永遠絕對不要吐出 HTML
+
+要 這樣做 (DO these):
+Views:
+1. 是模組化的 - 程式片段
+2. 包含迴圈 (loops) 以及簡單的 if 邏輯
+
+Controllers:
+1. 擦掉所有 view 和資料庫的資訊
+2. 提供所有 view 需要的資料
+3. 對資料套用商業規則 (business rules)
+4. 呼叫資料庫 models 來存取資料 (store/retrieve data)
+5. 處理所有的錯誤訊息
+
+Models:
+1. 套用有限的商業邏輯 (business logic) -- 假如有的話 -- 到資料庫函式
+2. 擷取任何錯誤並且將其送到 controller
+3. 執行最少的資料完整性檢查
