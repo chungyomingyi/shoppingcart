@@ -1,10 +1,13 @@
-<?php 
+<?php
+
 if (isset($_GET["logout"]))
 {
 	setcookie("account", "Guest", time() - 3600);
 	header("Location: index.php");
 	exit();
 }
+
+//判斷輸入的帳號密碼是否正確
 if (isset($_POST["btnOK"]))
 {
 	$account = $_POST["account"];
@@ -24,7 +27,7 @@ if (isset($_POST["btnOK"]))
         <title>CBTwheels</title>
 <?php require_once("head_data.php"); ?>
     </head>
-    <body>
+<body>
     <div class="top_bg">
 		<div class="container">
 			<div class="header_top-sec">

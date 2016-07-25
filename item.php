@@ -28,7 +28,7 @@ switch($_GET["action"]) {
 			}
 		}
 	break;
-	case "remove":	//移除
+	case "remove":	//移除已選的購物車
 		if(!empty($_SESSION["cart_item"])) {
 			foreach($_SESSION["cart_item"] as $k => $v) {
 					if($_GET["code"] == $k)
@@ -69,62 +69,74 @@ switch($_GET["action"]) {
 </div>
 <!--載入上層選項-->
 <?php require_once("menu_top.php"); ?>
-<div id="shopping-cart">
-	<div class="txt-heading">購物車Shopping Cart <a id="btnEmpty" href="item.php?action=empty">清空購物車</a></div>
-	<?php
-	if(isset($_SESSION["cart_item"])){
-    $item_total = 0;
-	?>	
-		<table cellpadding="10" cellspacing="1">
-			<tbody>
-				<tr>
-				<th><strong>產品名稱</strong></th>
-				<th><strong>數量</strong></th>
-				<th></th>
-				<th></th>
-				<th><strong>價格</strong></th>
-				</tr>
-			<!--用foreach顯示選取的物品-->
-			<?php foreach ($_SESSION["cart_item"] as $item){?>
+<div class="contact">
+	<div class="container">
+		<div id="shopping-cart">
+			<div class="txt-heading">購物車Shopping Cart <a id="btnEmpty" href="item.php?action=empty">清空購物車</a></div>
+			<?php
+			if(isset($_SESSION["cart_item"])){
+		    $item_total = 0;
+			?>	
+				<table cellpadding="10" cellspacing="1">
+					<tbody>
 						<tr>
-						<td><strong><?php echo $item["name"]; ?></strong></td>
-						<td><?php echo $item["quantity"]; ?></td>
-						<td></td>
-						<td align=right><?php echo "$".$item["price"]; ?></td>
-						<td></td>
-						<td><a href="item.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction">不想買</a></td>
+						<th><strong>產品名稱</strong></th>
+						<th><strong>數量</strong></th>
+						<th></th>
+						<th></th>
+						<th><strong>價格</strong></th>
+						</tr>
+					<!--用foreach顯示選取的物品-->
+					<?php foreach ($_SESSION["cart_item"] as $item){?>
+						<tr>
+							<td><strong><?php echo $item["name"]; ?></strong></td>
+							<td><?php if ($item["quantity"] < 99 ){ //如果輸入數量大於99將跳出警告視窗
+								echo $item["quantity"]; 
+							}else{ 
+								echo "<script type='text/javascript'>";
+    							echo "alert('數量有誤，請重新輸入');";
+    							echo $item["quantity"] = 1 ;
+    							echo $item["price"] = 0 ;
+    							echo "</script>";
+							}
+							?></td>
+							<td></td>
+							<td align=right><?php echo "$".$item["price"]; ?></td>
+							<td></td>
+							<td><a href="item.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction">不想買</a></td>
 						</tr>
 						<?php $item_total += ($item["price"]*$item["quantity"]);}?>
-				<tr>
-					<td colspan="5" align=right><strong>Total:</strong> <?php echo "$".$item_total; ?></td>
-					<td><a class="order" href="pay_total.php">結帳</a></td>
-				</tr>
-			</tbody>
-</table>		
-  <?php
-}
-?>
-</div>
-
-<div id="product-grid">
-	<div class="txt-heading">產品</div>
-	<?php  //用foreach迴圈撈product裡所有的資料，顯示在產品清單中
-	$product_array = $db_handle->runQuery("SELECT * FROM product");
-	if (!empty($product_array)) { 
-		foreach($product_array as $key=>$value){
-	?>
-		<div class="product-item">
-			<form method="post" action="item.php?action=add&code=<?php echo $product_array[$key]["code"]; ?>">
-			<div class="product-image"><img src="<?php echo $product_array[$key]["image"]; ?>"></div>
-			<div><strong><?php echo $product_array[$key]["name"]; ?></strong></div>
-			<div class="product-price"><?php echo "$".$product_array[$key]["price"]; ?></div>
-			<div><input type="text" name="quantity" value="1" size="2" /><input type="submit" value="Add to cart" class="btnAddAction" /></div>
-			</form>
+						<tr>
+							<td colspan="5" align=right><strong>Total:</strong> <?php echo "$".$item_total; ?></td>
+							<td><a class="order" href="pay_total.php">結帳</a></td>
+						</tr>
+					</tbody>
+				</table>		
+						  <?php
+						}
+						?>
 		</div>
-	<?php
-			}
-	}
-	?>
+		<div id="product-grid">
+			<div class="txt-heading">產品</div>
+				<?php  //用foreach迴圈撈product裡所有的資料，顯示在產品清單中
+					$product_array = $db_handle->runQuery("SELECT * FROM product");
+					if (!empty($product_array)) { 
+						foreach($product_array as $key=>$value){
+					?>
+						<div class="product-item">
+							<form method="post" action="item.php?action=add&code=<?php echo $product_array[$key]["code"]; ?>">
+							<div class="product-image"><img src="<?php echo $product_array[$key]["image"]; ?>"></div>
+							<div><strong><?php echo $product_array[$key]["name"]; ?></strong></div>
+							<div class="product-price"><?php echo "$".$product_array[$key]["price"]; ?></div>
+							<div><input type="text" name="quantity" value="1" size="2" /><input type="submit" value="Add to cart" class="btnAddAction" /></div>
+							</form>
+						</div>
+					<?php
+						}
+					}
+				?>
+		</div>
+	</div>
 </div>
 </BODY>
 </HTML>
