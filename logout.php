@@ -1,7 +1,5 @@
 <?php
   //清除 cookie 內容
-  //unset($_SESSION["id"]);
-  //unset($_SESSION["passed"]);
   setcookie("id", "");
   setcookie("passed", "");
 	

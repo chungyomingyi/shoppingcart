@@ -1,8 +1,8 @@
 <?php
-session_start();
+
 if (isset($_GET["logout"]))
 {
-	$_SESSION("account", "Guest", time() - 3600);
+	setcookie("account", "Guest", time() - 3600);
 	header("Location: index.php");
 	exit();
 }
@@ -13,9 +13,9 @@ if (isset($_POST["btnOK"]))
 	$account = $_POST["account"];
 	if (trim($account) != "")
 	{
-		$_SESSION("account", $account);
-		if (isset($_SESSION["lastPage"]))
-		  header(sprintf("Location: %s", $_SESSION["lastPage"]));
+		setcookie("account", $account);
+		if (isset($_COOKIE["lastPage"]))
+		  header(sprintf("Location: %s", $_COOKIE["lastPage"]));
 		else
 		   header("Location: index.php");
 		exit();

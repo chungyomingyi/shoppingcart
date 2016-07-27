@@ -23,7 +23,8 @@
     $result = execute_sql($link, "member", $sql);
     
     //如果帳號已經有人使用
-    if (mysqli_num_rows($result) != 0){
+    if (mysqli_num_rows($result) != 0)
+    {
       //釋放 $result 佔用的記憶體
       mysqli_free_result($result);
     	
@@ -35,11 +36,12 @@
     }
     
     //如果帳號沒人使用
-    else{
+    else
+    {
       //釋放 $result 佔用的記憶體	
       mysqli_free_result($result);
     	
-      //新增表單資料至資料褲
+      //執行 SQL 命令，新增此帳號
       $sql = "INSERT INTO users (account, password, name, sex, 
               year, month, day, telephone, cellphone, address,
               email, url, comment) VALUES ('$account', '$password', 
