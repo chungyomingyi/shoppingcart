@@ -1,3 +1,4 @@
+<?php session_start()?>
 <?php require_once("checkid.php"); ?>
 <html>
 <head>
@@ -18,7 +19,7 @@
 					<?php endif; ?>
 				</ul>
 			</div>
-		<div class="clearfix"> </div>
+				<div class="clearfix"> </div>
 		</div>
 	</div>
 </div>

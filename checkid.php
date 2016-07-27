@@ -1,7 +1,7 @@
-<?php 
 
-if (isset($_COOKIE["account"]))
-  $account = $_COOKIE["account"];
+<?php session_start();
+if (isset($_SESSION["account"]))
+  $account = $_SESSION["account"];
 else 
   $account = "Guest";
 
