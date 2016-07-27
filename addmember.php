@@ -14,21 +14,26 @@
     $address = $_POST["address"];
     $email = $_POST["email"]; 
     $url = $_POST["url"]; 
+    
     //建立資料連接
     $link = create_connection();
+    		
     //檢查帳號是否有人申請
     $sql = "SELECT * FROM users Where account = '$account'";
     $result = execute_sql($link, "member", $sql);
+    
     //如果帳號已經有人使用
     if (mysqli_num_rows($result) != 0){
       //釋放 $result 佔用的記憶體
       mysqli_free_result($result);
+    	
       //顯示訊息要求使用者更換帳號名稱
       echo "<script type='text/javascript'>";
       echo "alert('您所指定的帳號已經有人使用，請使用其它帳號');";
       echo "history.back();";
       echo "</script>";
     }
+    
     //如果帳號沒人使用
     else{
       //釋放 $result 佔用的記憶體	
@@ -40,6 +45,7 @@
               email, url, comment) VALUES ('$account', '$password', 
               '$name', '$sex', $year, $month, $day, '$telephone', 
               '$cellphone', '$address', '$email', '$url', '$comment')";
+    
       $result = execute_sql($link, "member", $sql);
     }
     

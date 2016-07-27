@@ -6,12 +6,13 @@
   $account = $_POST["account"]; 	
   $password = $_POST["password"];
 
-  //建立資料連接
-  $link = create_connection();
+  //建立資料連接，讀取DBController類別裡create_connection()的return出來的值
+   
+  $link = new DBController(create_connection());
 					
   //檢查帳號密碼是否正確
   $sql = "SELECT * FROM users Where account = '$account' AND password = '$password'";
-  $result = execute_sql($link, "member", $sql);
+  $result = new DBController(execute_sql($link, "member", $sql));
 
   //如果帳號密碼錯誤
   if (mysqli_num_rows($result) == 0)
