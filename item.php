@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php require_once("checkid.php"); ?>
 <?php
 require_once("dbcontroller.php");	//連線資料庫
@@ -7,8 +8,8 @@ switch($_GET["action"]) {
 	case "add":	//新增物品至購物車
 		if(!empty($_POST["quantity"])) {	//以數量來判斷，預設為1
 			//以product的 Code 欄位為依據讀取sql資料
-			$productByCode = $db_handle->runQuery("SELECT * FROM tblproduct WHERE code='" . $_GET["code"] . "'");
-			//
+			$productByCode = $db_handle->runQuery("SELECT * FROM product WHERE code='" . $_GET["code"] . "'");
+			//物品陣列顯示
 			$itemArray = array($productByCode[0]["code"]=>array('name'=>$productByCode[0]["name"], 
 																'code'=>$productByCode[0]["code"], 
 																'quantity'=>$_POST["quantity"], 

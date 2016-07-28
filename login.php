@@ -13,9 +13,9 @@ if (isset($_POST["btnOK"]))
 	$account = $_POST["account"];
 	if (trim($account) != "")
 	{
-		setcookie("account", $account);
-		if (isset($_COOKIE["lastPage"]))
-		  header(sprintf("Location: %s", $_COOKIE["lastPage"]));
+		$_SESSION["account"] = $account;
+		if (isset($_SESSION["lastPage"]))
+		  header(sprintf("Location: %s", $_SESSION["lastPage"]));
 		else
 		   header("Location: index.php");
 		exit();

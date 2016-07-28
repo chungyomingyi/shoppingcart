@@ -27,8 +27,8 @@
     mysqli_free_result($result);
     //關閉資料連接	
     mysqli_close($link);
-    //將使用者資料加入 cookies
-    $_SESSION["account"=$account;
+    //將使用者資料加入 SESSION
+    $_SESSION["account"] = $account;
     echo "<script type='text/javascript'>";
     echo "alert('登入成功');";
     echo "history.back();";
